@@ -5,6 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { AboutPage } from '../pages/about/about';
+import { ContactPage } from '../pages/contact/contact';
+import { PostsPage } from '../pages/posts/posts';
 
 @Component({
   templateUrl: 'app.html'
@@ -13,6 +16,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
+  activePage: any;
 
   pages: Array<{title: string, component: any}>;
 
@@ -22,8 +26,13 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'List', component: ListPage },
+      { title: 'Posts', component: PostsPage },
+      { title: 'About', component: AboutPage },
+      { title: 'Contact', component: ContactPage }
     ];
+
+    this.activePage = this.pages[0];
 
   }
 
@@ -40,5 +49,10 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+    this.activePage = page;
+  }
+
+  checkActive(page) {
+    return page == this.activePage;
   }
 }

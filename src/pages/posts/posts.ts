@@ -1,12 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the PostsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, Modal, ModalController, ModalOptions } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -15,11 +8,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PostsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private modal: ModalController) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PostsPage');
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad PostsPage');
+  // }
+
+  openModal() {
+
+    const myModalOptions: ModalOptions = {
+      enableBackdropDismiss: false
+    }
+
+    const myModal: Modal = this.modal.create('PostPage', myModalOptions );
+
+    myModal.present();
   }
 
 }

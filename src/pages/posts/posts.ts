@@ -1,33 +1,34 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, Modal, ModalController, ModalOptions, Alert, AlertController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
+import { AngularFireDatabase } from 'angularfire2/database'
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
   selector: 'page-posts',
-  templateUrl: 'posts.html',
+  templateUrl: 'posts.html'
 })
 export class PostsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private modal: ModalController,
-              public alertCtrl: AlertController) {
-  }
+  posts: Observable<any[]>;
 
-  // ionViewDidLoad() {
-  //   console.log('ionViewDidLoad PostsPage');
-  // }
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public alertCtrl: AlertController, public fdb: AngularFireDatabase) {
+    this.posts = fdb.list('posts').valueChanges();
+    }
 
-  public add() {
+  public addItem() {
     let alert = this.alertCtrl.create({
-      title: "Add Product",
-      message: "Enter a product and the price of that product",
+      title: "Add New Post",
+      message: "Enter a title and body of your post",
       inputs: [
         {
-          name: "product",
-          placeholder: "Product Name"
+          name: "title",
+          placeholder: "Add Title"
         },
         {
-          name: "price",
-          placeholder: "Product Price"
+          name: "body",
+          placeholder: "Add Body"
         }
       ],
       buttons: [
@@ -35,19 +36,27 @@ export class PostsPage {
           text: "Cancel"
         },
         {
-          text: "Save",
+          text: "Post",
           handler: data => {
-            console.log({
-              name: data.product,
-              price: data.price
-            });
+            let newPost = {
+              title: data.title,
+              body: data.body
+            };
+            this.fdb.list('posts').push(newPost);
+
           }
         }
       ]
     });
     alert.present();
+  }
 
   }
+
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad PostsPage');
+  // }
+
 
   // openModal() {
   //
@@ -60,4 +69,3 @@ export class PostsPage {
   //   myModal.present();
   // }
 
-}

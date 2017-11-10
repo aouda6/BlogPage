@@ -11,6 +11,20 @@
 <ion-content padding>
   <h2> Welcome to Abdulla's Blog</h2>
 
-  <button ion-button (click)="add()">Add New Post</button>
+  <ion-list no-lines>
+    <ion-item class="text" *ngFor="let onePost of posts | async" no-padding>
+      <ion-card >
+        <ion-card-header>
+          {{onePost.title}}
+        </ion-card-header>
+        <ion-card-content>
+          {{onePost.body}}
+        </ion-card-content>
+      </ion-card>
+
+
+    </ion-item>
+  </ion-list>
+  <button ion-button (click)="addItem()">Add New Post</button>
 
 </ion-content>

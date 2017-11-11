@@ -21,8 +21,8 @@ export class PostPage {
     this.view.dismiss();
   }
 
-  saveRecord() {
-    console.log(data.title);
-  }
+  // saveRecord() {
+  //   console.log(data.title);
+  // }
 
 }

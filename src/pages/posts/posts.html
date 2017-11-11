@@ -25,6 +25,9 @@
   <ion-list>
     <ion-item class="text" *ngFor="let onePost of posts | async; let i = index" [title]="onePost.title"   no-padding>
       {{onePost.title}}
+      <button ion-button icon-only item-right clear (click)='deletePost(i)'>
+        <ion-icon name="close-circle"></ion-icon>
+      </button>
 
     </ion-item>
 

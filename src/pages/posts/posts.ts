@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import {AngularFireDatabase, QueryFn} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
@@ -10,15 +10,23 @@ import {query} from "@angular/core/src/animation/dsl";
   selector: 'page-posts',
   templateUrl: 'posts.html'
 })
-export class PostsPage {
+export class PostsPage implements OnInit {
 
   posts: Observable<any[]>;
-
+  keyNames: string[];
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl: AlertController, public fdb: AngularFireDatabase) {
 
     this.posts = fdb.list('posts').valueChanges();
 
+  }
+  ngOnInit() {
+    this.fdb.object('posts').valueChanges().forEach(rec => {
+      if (rec) {
+      this.keyNames = new Array(Object.keys(rec).length);
+      this.keyNames = Object.keys(rec);
+    }
+    });
   }
 
   public addItem() {
@@ -51,12 +59,7 @@ export class PostsPage {
             this.fdb.list('posts').push({
                 title: data.title,
                 body: data.body
-          }).then(
-              (rec) => {
-                console.log(rec.key);
-
-              }
-            );
+          })
 
           }
         }
@@ -66,36 +69,7 @@ export class PostsPage {
   }
 
   deletePost(i) {
-var list = this.fdb.object('posts').valueChanges();
-    list.forEach(rec => {
-      let keyNames = Object.keys(rec);
-      console.log('key:', keyNames[i]);
-    });
-
-    // this.fdb.object('posts').valueChanges().forEach(rec => {
-    //   if (rec) {
-    //
-    //     let keyNames = Object.keys(rec);
-    //     this.fdb.object('posts/' + keyNames[i]).remove();
-    //
-    //   }
-    //
-    // });
-
-
-  //
-
-
-
-
-
-
-   //  this.fdb.list('posts').remove(data[i].key);
-
-    //  this.fdb.list('posts').remove(rec[i].key).then(rec => {
-
-
-    //
+    this.fdb.object('posts/' + this.keyNames[i]).remove();
   }
 
 }

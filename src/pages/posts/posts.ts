@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
-import {AngularFireDatabase} from 'angularfire2/database';
+import {AngularFireDatabase, QueryFn} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
+import {query} from "@angular/core/src/animation/dsl";
 
 
 @IonicPage()
@@ -15,12 +16,8 @@ export class PostsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl: AlertController, public fdb: AngularFireDatabase) {
+
     this.posts = fdb.list('posts').valueChanges();
-    // this.posts.forEach(data =>{
-    //   console.log(data[0]);
-    //
-    //
-    // })
 
   }
 
@@ -51,9 +48,12 @@ export class PostsPage {
               title: data.title,
               body: data.body
             };
-            this.fdb.list('posts').push(newPost).then(
-              (data) => {
-             //   console.log(data.key);
+            this.fdb.list('posts').push({
+                title: data.title,
+                body: data.body
+          }).then(
+              (rec) => {
+                console.log(rec.key);
 
               }
             );
@@ -66,9 +66,25 @@ export class PostsPage {
   }
 
   deletePost(i) {
-    this.fdb.list('posts').valueChanges().forEach((rec)=>{
-      console.log(rec[i]);
-    })
+var list = this.fdb.object('posts').valueChanges();
+    list.forEach(rec => {
+      let keyNames = Object.keys(rec);
+      console.log('key:', keyNames[i]);
+    });
+
+    // this.fdb.object('posts').valueChanges().forEach(rec => {
+    //   if (rec) {
+    //
+    //     let keyNames = Object.keys(rec);
+    //     this.fdb.object('posts/' + keyNames[i]).remove();
+    //
+    //   }
+    //
+    // });
+
+
+  //
+
 
 
 

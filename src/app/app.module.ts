@@ -4,13 +4,13 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { PostsPage } from '../pages/posts/posts';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AccordionComponent } from '../components/accordion/accordion';
+import { DeletePostComponent } from '../components/delete-post/delete-post';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -28,10 +28,10 @@ var config = {
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
-    AboutPage,
     ContactPage,
-    PostsPage
+    PostsPage,
+    AccordionComponent,
+    DeletePostComponent
   ],
   imports: [
     BrowserModule,
@@ -43,8 +43,6 @@ var config = {
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
-    AboutPage,
     ContactPage,
     PostsPage
   ],

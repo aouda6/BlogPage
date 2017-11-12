@@ -11,14 +11,18 @@
 <ion-content padding>
   <h2> Welcome to Abdulla's Blog</h2>
   <ion-list>
-    <ion-item class="text" *ngFor="let onePost of posts | async; let i = index" [title]="onePost.title" no-padding>
-      {{onePost.title}}
+    <ion-item class="text" *ngFor="let onePost of posts | async; let i = index" no-padding>
+      <h2 ion-text color="primary" > {{onePost.title}}</h2>
       <button ion-button icon-only item-right clear (click)='editPost(i)'>
         <ion-icon name="create"></ion-icon>
       </button>
       <button ion-button icon-only item-right clear (click)='deletePost(i)'>
         <ion-icon name="close-circle"></ion-icon>
       </button>
+
+        <div text-wrap>
+          {{onePost.body}}
+        </div>
     </ion-item>
 
   </ion-list>

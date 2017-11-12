@@ -13,6 +13,7 @@ export class PostsPage implements OnInit {
   posts: Observable<any[]>;
   keyNames: string[];
   postData: Object[];
+  flag: boolean = false;
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController, public fdb: AngularFireDatabase) {
@@ -30,9 +31,7 @@ export class PostsPage implements OnInit {
 for (var i=0; i < Object.keys(rec).length; i++){
           this.postData[i]=(rec[this.keyNames[i]]);
 }
-  //      Object.getOwnPropertyNames(rec).forEach( (key, idx, array)=>{
-  //        this.postData.push(rec[key]);
-  //      });
+
       }
     });
   }
@@ -58,10 +57,6 @@ for (var i=0; i < Object.keys(rec).length; i++){
         {
           text: "Post",
           handler: data => {
-            let newPost = {
-              title: data.title,
-              body: data.body
-            };
             this.fdb.list('posts').push({
               title: data.title,
               body: data.body
@@ -76,7 +71,9 @@ for (var i=0; i < Object.keys(rec).length; i++){
   deletePost(i) {
     this.fdb.object('posts/' + this.keyNames[i]).remove();
   }
-
+  toggleBody(i) {
+    this.flag = !this.flag;
+  }
   editPost(i) {
     let onePost = this.postData[i];
     let alert = this.alertCtrl.create({

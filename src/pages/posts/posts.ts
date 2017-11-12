@@ -72,18 +72,18 @@ export class PostsPage implements OnInit {
   }
 
   editPost(i) {
-    let onePost = this.postData[i];
+    let onePost: Object = this.postData[i];
     let alert = this.alertCtrl.create({
       title: "Edit Post",
       message: "Edit your post",
       inputs: [
         {
           name: "title",
-          value: onePost.title
+          value: onePost['title']
         },
         {
           name: "body",
-          value: onePost.body
+          value: onePost['body']
         }
       ],
       buttons: [

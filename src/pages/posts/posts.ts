@@ -13,7 +13,6 @@ export class PostsPage implements OnInit {
   posts: Observable<any[]>;
   keyNames: string[];
   postData: Object[];
-  flag: boolean = false;
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController, public fdb: AngularFireDatabase) {
@@ -28,9 +27,9 @@ export class PostsPage implements OnInit {
         this.keyNames = Object.keys(rec);
 
         this.postData = new Array(Object.keys(rec).length);
-for (var i=0; i < Object.keys(rec).length; i++){
-          this.postData[i]=(rec[this.keyNames[i]]);
-}
+        for (var i = 0; i < Object.keys(rec).length; i++) {
+          this.postData[i] = (rec[this.keyNames[i]]);
+        }
 
       }
     });
@@ -71,41 +70,39 @@ for (var i=0; i < Object.keys(rec).length; i++){
   deletePost(i) {
     this.fdb.object('posts/' + this.keyNames[i]).remove();
   }
-  toggleBody(i) {
-    this.flag = !this.flag;
-  }
+
   editPost(i) {
     let onePost = this.postData[i];
     let alert = this.alertCtrl.create({
-        title: "Edit Post",
-        message: "Edit your post",
-        inputs: [
-          {
-            name: "title",
-            value: onePost.title
-          },
-          {
-            name: "body",
-            value: onePost.body
+      title: "Edit Post",
+      message: "Edit your post",
+      inputs: [
+        {
+          name: "title",
+          value: onePost.title
+        },
+        {
+          name: "body",
+          value: onePost.body
+        }
+      ],
+      buttons: [
+        {
+          text: "Cancel"
+        },
+        {
+          text: "Save",
+          handler: data => {
+            this.fdb.object('posts/' + this.keyNames[i]).update({
+              title: data.title,
+              body: data.body
+            });
           }
-        ],
-        buttons: [
-          {
-            text: "Cancel"
-          },
-          {
-            text: "Save",
-            handler: data => {
-              this.fdb.object('posts/' + this.keyNames[i]).update({
-                title: data.title,
-                body: data.body
-              });
-            }
-          }
-        ]
-      });
-      alert.present();
+        }
+      ]
+    });
+    alert.present();
 
   }
-  }
+}
 

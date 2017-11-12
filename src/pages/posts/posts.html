@@ -1,3 +1,4 @@
+<!-- navbar is viewable on the page to connect to other pages -->
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -7,10 +8,12 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
   <h2> Welcome to Abdulla's Blog</h2>
   <ion-list>
+    <!-- Retrieves the collection posts from the component and loops over all its elements to display
+    the post's title and body -->
+    <!-- The loop also includes a button for editing and deleting posts -->
     <ion-item class="text" *ngFor="let onePost of posts | async; let i = index" no-padding>
       <h2 ion-text color="primary" > {{onePost.title}}</h2>
       <button ion-button icon-only item-right clear (click)='editPost(i)'>
@@ -27,6 +30,7 @@
 
   </ion-list>
 
+  <!-- This adds a new post -->
   <button ion-button (click)="addItem()">Add New Post</button>
 
 </ion-content>

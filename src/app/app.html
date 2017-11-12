@@ -1,3 +1,4 @@
+<!-- Side menu that allows user to navigate between pages -->
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
@@ -7,6 +8,7 @@
 
   <ion-content>
     <ion-list>
+      <!-- Pages that are clicked will be highlighted and remain that way until another is clicked -->
       <button menuClose ion-item *ngFor="let p of pages" [class.activeHighlight]="checkActive(p)" (click)="openPage(p)">
         {{p.title}}
       </button>
